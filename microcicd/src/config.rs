@@ -1,31 +1,24 @@
 use once_cell::sync::Lazy;
-use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
 
-#[derive(Debug, Deserialize)]
-pub struct Config {
-    pub server: ServerConfig,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct ServerConfig {
-    pub port: i32,
-}
-
-pub static CONFIG: Lazy<Config> = Lazy::new(|| {
-    let config_content = fs::read_to_string("./config/setting.toml")
+pub static CONFIG: Lazy<HashMap<String, String>> = Lazy::new(|| {
+    let config_content = fs::read_to_string("./config/setting")
         .expect("Unable to read config file");
 
-    toml::de::from_str(&config_content)
-        .expect("Unable to parse config file")
+    pro_to_map(config_content)
 });
 
 pub static TASK: Lazy<HashMap<String, String>> = Lazy::new(|| {
-    let config_content = fs::read_to_string("./config/task.properties")
+    let config_content = fs::read_to_string("./config/task")
         .expect("Unable to read config file");
 
-    let map = config_content.lines()
+    pro_to_map(config_content)
+});
+
+
+fn pro_to_map(pro: String) -> HashMap<String, String> {
+    let map = pro.lines()
         .filter_map(|line| {
             let mut parts = line.splitn(2, "=");
             let key = parts.next()?.trim().to_string();
@@ -35,4 +28,4 @@ pub static TASK: Lazy<HashMap<String, String>> = Lazy::new(|| {
         .collect::<HashMap<String, String>>();
 
     map
-});
+}

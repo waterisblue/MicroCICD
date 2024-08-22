@@ -7,6 +7,7 @@ mod sh;
 
 #[tokio::main]
 async fn main() {
-    let port = CONFIG.server.port;
+    let default_port = "7777".to_string();
+    let port = CONFIG.get("port").unwrap_or(&default_port);
     start("0.0.0.0", port).await.unwrap();
 }
