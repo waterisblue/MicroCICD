@@ -1,4 +1,4 @@
-use poem::{handler, Route, Server, Endpoint};
+use poem::{handler, post, Route, Server};
 use poem::listener::TcpListener;
 use poem::web::Path;
 use crate::sh::exec;
@@ -10,15 +10,13 @@ async fn post_task(Path(task): Path<String>) -> String {
 }
 
 pub async fn start(ip: &str, port: &str) -> std::io::Result<()> {
-    let app = Route::new().at("/task/:task", post_task);
+    let app = Route::new().at("/task/:task", post(post_task));
 
     let address = format!("{}:{}", ip, port);
     println!("Listening on http://{}", address);
 
-    // 创建 TcpListener 并绑定地址
     let listener = TcpListener::bind(&address);
 
-    // 创建 Server 并运行
     Server::new(listener)
         .run(app)
         .await?;
