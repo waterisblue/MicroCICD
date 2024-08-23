@@ -55,4 +55,4 @@ Contributions are welcome! Please open an issue or submit a pull request with yo
 
 Thanks to [JetBrains](https://www.jetbrains.com/) for their support.
 
-[RustRover](./assets/rr.png)
+![RustRover](./assets/rr.png)
