@@ -26,7 +26,7 @@ This is a simple Continuous Integration and Continuous Deployment (CICD) tool de
     ```
 2. Navigate to the project directory:
     ```bash
-    cd micro-cicd
+    cd micro-cicd/microcicd
     ```
 3. Run program:
     ```bash
